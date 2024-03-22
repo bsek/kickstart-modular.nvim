@@ -1,6 +1,9 @@
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
+local default_opts = { noremap = true, silent = true }
+local expr_opts = { noremap = true, expr = true, silent = true }
+
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -9,7 +12,7 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>f', vim.diagnostic.setloclist, { desc = 'Open diagnostic Quick[f]ix list' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -49,3 +52,42 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 })
 
 -- vim: ts=2 sts=2 sw=2 et
+
+-- Save file mac
+vim.keymap.set({ 'i', 'x', 'n', 's' }, '<D-s>', '<cmd>w<cr><esc>', { desc = 'Save file' })
+
+-- Indent correctly when entering instert mode
+vim.keymap.set('n', 'i', function()
+  if #vim.fn.getline '.' == 0 then
+    return [["_cc]]
+  else
+    return 'i'
+  end
+end, expr_opts)
+
+-- Center search results
+vim.keymap.set('n', 'n', 'nzz', default_opts)
+vim.keymap.set('n', 'N', 'Nzz', default_opts)
+
+-- Visual line wraps
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", expr_opts)
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", expr_opts)
+
+-- Better indent
+vim.keymap.set('v', '<', '<gv', default_opts)
+vim.keymap.set('v', '>', '>gv', default_opts)
+
+-- Paste over currently selected text without yanking it
+vim.keymap.set('v', 'p', '"_dP', default_opts)
+
+-- Switch buffer
+vim.keymap.set('n', '<S-Tab>', ':bprevious<CR>', default_opts)
+vim.keymap.set('n', '<Tab>', ':bnext<CR>', default_opts)
+
+-- Move selected line / block of text in visual mode
+vim.keymap.set('x', 'K', ":move '<-2<CR>gv-gv", default_opts)
+vim.keymap.set('x', 'J', ":move '>+1<CR>gv-gv", default_opts)
+
+-- Quit all
+
+vim.keymap.set('n', '<leader>qq', '<cmd>qa<cr>', { desc = 'Quit all' })
