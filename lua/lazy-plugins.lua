@@ -28,6 +28,9 @@ require('lazy').setup({
 
     { import = 'kickstart/plugins' },
     { import = 'custom/plugins' },
+    -- setup lsp
+    require 'custom/lsp',
+    { import = 'custom/lang' },
   },
 }, {
   ui = {

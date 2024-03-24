@@ -15,10 +15,6 @@ return {
     opts = {
       servers = {
         gopls = {
-          keys = {
-            -- Workaround for the lack of a DAP strategy in neotest-go: https://github.com/nvim-neotest/neotest-go/issues/12
-            { '<leader>td', "<cmd>lua require('dap-go').debug_test()<CR>", desc = 'Debug Nearest (Go)' },
-          },
           settings = {
             gopls = {
               gofumpt = true,
@@ -57,6 +53,21 @@ return {
           },
         },
       },
+      setup = {
+        gopls = function(client, _)
+          if not client.server_capabilities.semanticTokensProvider then
+            local semantic = client.config.capabilities.textDocument.semanticTokens
+            client.server_capabilities.semanticTokensProvider = {
+              full = true,
+              legend = {
+                tokenTypes = semantic.tokenTypes,
+                tokenModifiers = semantic.tokenModifiers,
+              },
+              range = true,
+            }
+          end
+        end,
+      },
     },
   },
   {
@@ -68,7 +79,6 @@ return {
   },
   {
     'nvimtools/none-ls.nvim',
-    optional = true,
     dependencies = {
       {
         'williamboman/mason.nvim',
@@ -79,8 +89,6 @@ return {
       opts.sources = vim.list_extend(opts.sources or {}, {
         nls.builtins.code_actions.gomodifytags,
         nls.builtins.code_actions.impl,
-        nls.builtins.formatting.goimports,
-        nls.builtins.formatting.gofumpt,
       })
     end,
   },

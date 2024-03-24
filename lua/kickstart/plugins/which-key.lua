@@ -25,6 +25,9 @@ return {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = '[D]debug', _ = 'which_key_ignore' },
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
+        ['<leader>b'] = { name = '[B]uffer', _ = 'which_key_ignore' },
+        ['<leader>x'] = { name = 'Diagnostics', _ = 'which_key_ignore' },
+        ['<leader>q'] = { name = '[Q]uit', _ = 'which_key_ignore' },
       }
     end,
   },

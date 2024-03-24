@@ -86,6 +86,8 @@ return {
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
       vim.keymap.set('n', '<leader><space>', builtin.find_files, { desc = '[ ] Search Files' })
+      -- Search file mac
+      vim.keymap.set('n', '<D-p>', builtin.find_files, { desc = '[ ] Search Files' })
 
       -- Slightly advanced example of overriding default behavior and theme
       vim.keymap.set('n', '<leader>/', function()

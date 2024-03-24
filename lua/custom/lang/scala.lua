@@ -1,13 +1,5 @@
 return {
   {
-    'hrsh7th/nvim-cmp',
-    requires = {
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-vsnip' },
-      { 'hrsh7th/vim-vsnip' },
-    },
-  },
-  {
     'scalameta/nvim-metals',
     dependencies = {
       'nvim-lua/plenary.nvim',
